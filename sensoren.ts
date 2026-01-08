@@ -18,7 +18,7 @@ namespace smartfeldSensoren {
     //let sen0322 = new SEN0322();
 
     //% group="Ultraschallsensor 101020010"
-    //% block="Distanz in cm |%pin"
+    //% block="Distanz in cm (TEST9) |%pin"
     //% subcategory="Optische Sensoren" weight=100
     export function measureInCentimetersV2(pin: DigitalPin): number {
         let distanceBackup: number = 0;
@@ -40,30 +40,6 @@ namespace smartfeldSensoren {
         basic.pause(50);
         return RangeInCentimeters;
     }
-
-    //% subcategory="Optische Sensoren"
-namespace smartfeldSensoren {
-
-    //% group="Infrarotsensor 101020174" weight=100
-    //% block="IR-Sensor hell"
-    export function irSensorHell(): number {
-        return 0;
-    }
-
-    //% group="Infrarotsensor 101020174" weight=99
-    //% block="IR-Sensor dunkel"
-    export function irSensorDunkel(): number {
-        return 1;
-    }
-
-    //% group="Infrarotsensor 101020174" weight=98
-    //% block="IR-Sensor %pin sieht Linie"
-    export function irSensorSiehtLinie(pin: DigitalPin): number {
-        return pins.digitalReadPin(pin);
-    }
-}
-
-
     
     //% group="Bewegungsmelder 101020617"
     //% block="erkenne Bewegung |%pin"

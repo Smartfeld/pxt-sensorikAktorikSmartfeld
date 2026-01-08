@@ -213,6 +213,34 @@ namespace smartfeldAktoren {
 
     //--------------------------------------------------------------------------------------------------------
 
+    /** 
+     * Erstelle eine 4-Digit Display
+     */
+    //% subcategory="Display" weight=21
+    //% group="4-Digit Display 104030003"
+    //% block="4-Digit Display bei Clock Pin %clkPin|und Daten Pin %dataPin|"
+    //% trackArgs=0,2
+    //% blockSetVariable=Display
+    //% clkPin.defl=DigitalPin.P0 dataPin.defl=DigitalPin.P14
+    export function erstelle_Display(clkPin: DigitalPin, dataPin: DigitalPin): FourDigitDisplay {
+        return fourDigitDisplay.createDisplay(clkPin, dataPin);
+    }
+    export function zeige_Zahl(zahl: number) {
+        return fourDigitDisplay.show(zahl);
+    }
+    export function setze_Helligkeit(helligkeit: number) {
+        return fourDigitDisplay.set(helligkeit);
+    }
+    export function zeige_Ziffer(ziffer: number, stelle: number) {
+        return fourDigitDisplay.bit(ziffer, stelle);
+    }
+    export function zeige_Doppelpunkt(doppelpunkt: boolean) {
+        return fourDigitDisplay.point(doppelpunkt);
+    }
+    export function loesche_display() {
+        return fourDigitDisplay.clear();
+    }
+
     //% subcategory="Display" weight=20 
     //% group="OLED Display 0.96''"
     //% block="init OLED Breite %width Höhe %height"
@@ -306,35 +334,5 @@ namespace smartfeldAktoren {
     //% block="Schalte Steckdose auf der %ch %state"
     export function mySelectRfGroupID(rfGroupID: MyEnumGroupIDs): void {
         pig.selectRfGroupID(rfGroupID);
-    }
-
-    //--------------------------------------------------------------------------------------------------------
-
-    /** 
-     * Erstelle eine 4-Digit Display
-     */
-    //% subcategory="Display" weight=39
-    //% group="4-Digit Display 104030003"
-    //% block="4-Digit Display bei Clock Pin %clkPin|und Daten Pin %dataPin|"
-    //% trackArgs=0,2
-    //% blockSetVariable=Display
-    //% clkPin.defl=DigitalPin.P0 dataPin.defl=DigitalPin.P14
-    export function erstelle_Display(clkPin: DigitalPin, dataPin: DigitalPin): FourDigitDisplay {
-        return fourDigitDisplay.createDisplay(clkPin, dataPin);
-    }
-    export function zeige_Zahl(zahl: number) {
-        return fourDigitDisplay.show(zahl);
-    }
-    export function setze_Helligkeit(helligkeit: number) {
-        return fourDigitDisplay.set(helligkeit);
-    }
-    export function zeige_Ziffer(ziffer: number, stelle: number) {
-        return fourDigitDisplay.bit(ziffer, stelle);
-    }
-    export function zeige_Doppelpunkt(doppelpunkt: boolean) {
-        return fourDigitDisplay.point(doppelpunkt);
-    }
-    export function loesche_display() {
-        return fourDigitDisplay.clear();
     }
 }

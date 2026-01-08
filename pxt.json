@@ -1,5 +1,6 @@
 {
-    "name": "pxt-SensorikSmartfeld",
+    "name":"pxt-sensorikAktorikSmartfeld",
+    "version": "0.0.9",
     "description": "",
     "dependencies": {
         "core": "*",
@@ -45,5 +46,5 @@
         "microbit"
     ],
     "preferredEditor": "blocksprj",
-    "icon": "https://github.com/SamuelBaw/pxt-sensorikSmartfeld/blob/master/icon_directory/icon.png?raw=true"
+    "icon": "https://github.com/LeoZellTT/pxt-sensorikAktorikSmartfeld/blob/master/icon_directory/icon.png?raw=true"
 }
