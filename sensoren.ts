@@ -15,7 +15,7 @@ namespace smartfeldSensoren {
     let dfr0792 = new DFR0792();
     let aht20 = new AHT20();
     let scd30 = new SCD30();
-    //let sen0322 = new SEN0322();
+    let sen0322 = new SEN0322();
 
     //% group="Ultraschallsensor 101020010"
     //% block="Distanz in cm |%pin"
