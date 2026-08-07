@@ -443,7 +443,7 @@ namespace smartfeldSensoren {
         return Math.round(aht20.aht20ReadHumidity() * 100) / 100;
     }
 
-    /*//% subcategory="Umweltsensoren" weight=96
+    //% subcategory="Umweltsensoren" weight=96
     //% group="Sauerstoffsensor SEN0322"
     //% block="init Sauerstoffsensor ID %id"
     //% id.min=0 id.max=3
@@ -468,5 +468,5 @@ namespace smartfeldSensoren {
             this.meanNum = 100;
         }
         return sen0322.getOxygenData(this.meanNum);
-    }*/
+    }
 }
