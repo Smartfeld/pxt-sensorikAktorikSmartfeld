@@ -16,6 +16,7 @@
         "format.ts",
         "scd30.ts",
         "sen0322.ts",
+        "sen0465.ts",
         "sensoren.ts",
         "sunlight_si1151.ts",
         "aktoren.ts",
