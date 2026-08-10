@@ -492,14 +492,23 @@ namespace smartfeldSensoren {
 
     //% subcategory="Umweltsensoren" weight=93
     //% group="Sauerstoffsensor SEN0465"
-    //% block="Lese Sauerstoffkonzentration SEN0465 Sensor ID %id"
+    //% block="Lese Sauerstoffkonzentration SEN0465 Sensor ID %id Mittelwert %meanNum"
     //% id.min=0 id.max=3
-    export function lese_sauerstoff_sen0465(id = 0): number {
+    //% meanNum.min=1 meanNum.max=100
+    export function lese_sauerstoff_sen0465(id = 0, meanNum = 1): number {
 
         if (id < 0 || id > 3) {
             id = 0;
         }
 
-        return sen0465[id].getOxygenData();
+        if (meanNum < 1) {
+            meanNum = 1;
+        }
+
+        if (meanNum > 100) {
+            meanNum = 100;
+        }
+
+        return sen0465[id].getOxygenData(meanNum);
     }
 }

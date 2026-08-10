@@ -13,9 +13,13 @@ namespace smartfeldSensoren {
     export class SEN0465 {
 
         private address: number;
+        private oxygenData: number[];
+        private count: number;
 
         constructor() {
             this.address = SEN0465_BASE_ADDRESS;
+            this.oxygenData = [];
+            this.count = 0;
         }
 
 
@@ -117,13 +121,23 @@ namespace smartfeldSensoren {
             );
         }
 
+        private getAverageNum(values: number[], len: number): number {
+
+            let sum = 0;
+
+            for (let i = 0; i < len; i++) {
+                sum += values[i];
+            }
+
+            return sum / len;
+        }
 
         /**
          * Read oxygen concentration in %Vol
          *
          * Returns -1 if communication or checksum is invalid.
          */
-        getOxygenData(): number {
+        getOxygenData(meanNum: number): number {
 
             this.sendCommand(SEN0465_CMD_GET_ALL_DATA);
 
@@ -170,7 +184,45 @@ namespace smartfeldSensoren {
             }
 
 
-            return concentration;
+            // Anzahl Mittelwerte begrenzen
+if (meanNum < 1) {
+    meanNum = 1;
+}
+
+if (meanNum > 100) {
+    meanNum = 100;
+}
+
+
+// Alte Messwerte nach hinten verschieben
+for (let j = meanNum - 1; j > 0; j--) {
+    this.oxygenData[j] = this.oxygenData[j - 1];
+}
+
+
+// Neuesten Messwert vorne speichern
+this.oxygenData[0] = concentration;
+
+
+// Anzahl vorhandener Messwerte mitzählen
+if (this.count < meanNum) {
+    this.count++;
+}
+
+if (this.count > meanNum) {
+    this.count = meanNum;
+}
+
+
+// Mittelwert berechnen
+let average = this.getAverageNum(
+    this.oxygenData,
+    this.count
+);
+
+
+// Auf zwei Nachkommastellen runden
+return Math.round(average * 100) / 100;
         }
     }
 }
