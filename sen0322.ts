@@ -133,45 +133,20 @@ namespace smartfeldSensoren {
 
             basic.pause(100);
 
-            // let rxbuf = pins.i2cReadBuffer(
-            //     this.address,
-            //     3,
-            //     false
-            // );
-
-            // // Sauerstoffkonzentration berechnen
-            // this.oxygenData[0] =
-            //     this.key *
-            //     (
-            //         rxbuf[0]
-            //         + rxbuf[1] / 10.0
-            //         + rxbuf[2] / 100.0
-            //     );
-
             let rxbuf = pins.i2cReadBuffer(
                 this.address,
                 3,
                 false
             );
 
-            // Rohwert berechnen
-            let rawData =
-                rxbuf[0]
-                + rxbuf[1] / 10.0
-                + rxbuf[2] / 100.0;
-
-            // Debug-Ausgabe über USB / Serial
-            serial.writeValue("Byte0", rxbuf[0]);
-            serial.writeValue("Byte1", rxbuf[1]);
-            serial.writeValue("Byte2", rxbuf[2]);
-
-            serial.writeValue("Raw", rawData);
-            serial.writeValue("Key", this.key);
-
             // Sauerstoffkonzentration berechnen
-            this.oxygenData[0] = this.key * rawData;
-
-            serial.writeValue("O2", this.oxygenData[0]);
+            this.oxygenData[0] =
+                this.key *
+                (
+                    rxbuf[0]
+                    + rxbuf[1] / 10.0
+                    + rxbuf[2] / 100.0
+                );
 
             if (this.count < collectNum) {
                 this.count++;
