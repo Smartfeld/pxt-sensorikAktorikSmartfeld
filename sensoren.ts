@@ -15,7 +15,8 @@ namespace smartfeldSensoren {
     let dfr0792 = new DFR0792();
     let aht20 = new AHT20();
     let scd30 = new SCD30();
-    //let sen0322 = new SEN0322();
+    let sen0322 = [new SEN0322(), new SEN0322(), new SEN0322(), new SEN0322()];
+    let sen0465 = [new SEN0465(), new SEN0465(), new SEN0465(), new SEN0465()];
 
     //% group="Ultraschallsensor 101020010"
     //% block="Distanz in cm |%pin"
@@ -42,29 +43,29 @@ namespace smartfeldSensoren {
     }
 
     //% subcategory="Optische Sensoren"
-namespace smartfeldSensoren {
+    namespace smartfeldSensoren {
 
-    //% group="Infrarotsensor 101020174" weight=100
-    //% block="IR-Sensor hell"
-    export function irSensorHell(): number {
-        return 0;
+        //% group="Infrarotsensor 101020174" weight=100
+        //% block="IR-Sensor hell"
+        export function irSensorHell(): number {
+            return 0;
+        }
+
+        //% group="Infrarotsensor 101020174" weight=99
+        //% block="IR-Sensor dunkel"
+        export function irSensorDunkel(): number {
+            return 1;
+        }
+
+        //% group="Infrarotsensor 101020174" weight=98
+        //% block="IR-Sensor %pin sieht Linie"
+        export function irSensorSiehtLinie(pin: DigitalPin): number {
+            return pins.digitalReadPin(pin);
+        }
     }
 
-    //% group="Infrarotsensor 101020174" weight=99
-    //% block="IR-Sensor dunkel"
-    export function irSensorDunkel(): number {
-        return 1;
-    }
-
-    //% group="Infrarotsensor 101020174" weight=98
-    //% block="IR-Sensor %pin sieht Linie"
-    export function irSensorSiehtLinie(pin: DigitalPin): number {
-        return pins.digitalReadPin(pin);
-    }
-}
 
 
-    
     //% group="Bewegungsmelder 101020617"
     //% block="erkenne Bewegung |%pin"
     //% subcategory="Optische Sensoren" weight=50
@@ -248,7 +249,7 @@ namespace smartfeldSensoren {
     //% subcategory="Umweltsensoren" weight=75
     export function readGasHum(): number {
         return scd30.readHumidity();
-    } 
+    }
 
 
     //% group="Potentiometer 101020036"
@@ -376,7 +377,7 @@ namespace smartfeldSensoren {
     //% blockId=mpr121_touch_on_touch_sensor_released
     //% block="wenn | %sensor | losgelassen"
     //% subcategory="Mechanische Sensoren" weight=64
-    export function onTouchSensorReleased(sensor: TouchSensor, handler: () => void){
+    export function onTouchSensorReleased(sensor: TouchSensor, handler: () => void) {
         mpr121.onTouchSensorReleased(sensor, handler);
     }
 
@@ -410,7 +411,7 @@ namespace smartfeldSensoren {
     //% pin.defl=AnalogPin.P0
     //% subcategory="Mechanische Sensoren" weight=42
     export function initADKeyBoard(pin: AnalogPin) {
-            dfr0792.init(pin);
+        dfr0792.init(pin);
     }
 
     //% group="ADKey Board DFR0792"
@@ -428,7 +429,7 @@ namespace smartfeldSensoren {
     export function numberIsPushed(): boolean {
         return dfr0792.numberIsPushed();
     }
-   
+
     //% subcategory="Umweltsensoren" weight=98
     //% group="Temperatur- und Luftfeuchtigkeitssensor 101990644"
     //% block="Lese Temperatur(°C)"
@@ -443,30 +444,71 @@ namespace smartfeldSensoren {
         return Math.round(aht20.aht20ReadHumidity() * 100) / 100;
     }
 
-    /*//% subcategory="Umweltsensoren" weight=96
+    //% subcategory="Umweltsensoren" weight=96
     //% group="Sauerstoffsensor SEN0322"
     //% block="init Sauerstoffsensor ID %id"
     //% id.min=0 id.max=3
     export function init_sauerstoff(id = 0) {
-        if (this.id < 0 || this.id > 3) {
-            sen0322.setAddress(0);
+        if (id < 0 || id > 3) {
+            id = 0;
         }
-        else {
-            sen0322.setAddress(id);
-        }
+
+        sen0322[id].setAddress(id);
     }
 
     //% subcategory="Umweltsensoren" weight=95
     //% group="Sauerstoffsensor SEN0322"
-    //% block="Lese Sauerstoffsättigung(Prozent) %meanNum"
+    //% block="Lese Sauerstoffsättigung(Prozent) Sensor ID %id Mittelwert %meanNum"
+    //% id.min=0 id.max=3
     //% meanNum.min=1 meanNum.max=100
-    export function lese_sauerstoff(meanNum = 1) {
-        if (this.meanNum < 1) {
-            this.meanNum = 1;
+    export function lese_sauerstoff(id = 0, meanNum = 1) {
+        if (id < 0 || id > 3) {
+            id = 0;
         }
-        if (this.meanNum > 100) {
-            this.meanNum = 100;
+
+        if (meanNum < 1) {
+            meanNum = 1;
         }
-        return sen0322.getOxygenData(this.meanNum);
-    }*/
+
+        if (meanNum > 100) {
+            meanNum = 100;
+        }
+
+        return sen0322[id].getOxygenData(meanNum);
+    }
+    //% subcategory="Umweltsensoren" weight=94
+    //% group="Sauerstoffsensor SEN0465"
+    //% block="init SEN0465 Sauerstoffsensor ID %id"
+    //% id.min=0 id.max=3
+    export function init_sen0465(id = 0) {
+
+        if (id < 0 || id > 3) {
+            id = 0;
+        }
+
+        sen0465[id].setAddress(id);
+    }
+
+
+    //% subcategory="Umweltsensoren" weight=93
+    //% group="Sauerstoffsensor SEN0465"
+    //% block="Lese Sauerstoffkonzentration SEN0465 Sensor ID %id Mittelwert %meanNum"
+    //% id.min=0 id.max=3
+    //% meanNum.min=1 meanNum.max=100
+    export function lese_sauerstoff_sen0465(id = 0, meanNum = 1): number {
+
+        if (id < 0 || id > 3) {
+            id = 0;
+        }
+
+        if (meanNum < 1) {
+            meanNum = 1;
+        }
+
+        if (meanNum > 100) {
+            meanNum = 100;
+        }
+
+        return sen0465[id].getOxygenData(meanNum);
+    }
 }
