@@ -458,7 +458,7 @@ namespace smartfeldSensoren {
 
     //% subcategory="Umweltsensoren" weight=95
     //% group="Sauerstoffsensor SEN0322"
-    //% block="Sauerstoffkonzentration [%Vol] SEN0322 Sensor ID %id Mittelwert %meanNum"
+    //% block="SEN0465: O₂-Konzentration [Vol.-%] SEN0322 Sensor ID %id Mittelwert %meanNum"
     //% id.min=0 id.max=3
     //% meanNum.min=1 meanNum.max=100
     export function lese_sauerstoff(id = 0, meanNum = 1) {
@@ -492,7 +492,7 @@ namespace smartfeldSensoren {
 
     //% subcategory="Umweltsensoren" weight=93
     //% group="Sauerstoffsensor SEN0465"
-    //% block="Sauerstoffkonzentration [%Vol] SEN0465 Sensor ID %id Mittelwert %meanNum"
+    //% block="SEN0465: O₂-Konzentration [Vol.-%] SEN0465 Sensor ID %id Mittelwert %meanNum"
     //% id.min=0 id.max=3
     //% meanNum.min=1 meanNum.max=100
     export function lese_sauerstoff_sen0465(id = 0, meanNum = 1): number {
